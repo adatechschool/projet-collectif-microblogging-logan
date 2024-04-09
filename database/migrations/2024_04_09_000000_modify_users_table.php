@@ -16,8 +16,8 @@ return new class extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             // Change column to nullable
-            $table->string('bio')->nullable(false)->change();
-            $table->string('photo')->nullable(false)->change();
+            $table->string('bio')->nullable(true)->change();
+            $table->string('photo')->nullable(true)->change();
         });
     }
 
@@ -28,8 +28,8 @@ return new class extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             // Revert the column to not nullable
-            $table->string('bio')->nullable(true)->change();
-            $table->string('photo')->nullable(true)->change();
+            $table->string('bio')->nullable(false)->change();
+            $table->string('photo')->nullable(false)->change();
         });
     }
 };
