@@ -3,18 +3,19 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
+use Illuminate\View\View;
 
 class PostController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index() : Response
+    public function index() : View
     {
         echo('test');
-        return response ('Hello ça marche !');
+        return view('post.index');
     }
 
     /**
@@ -28,10 +29,18 @@ class PostController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request): RedirectResponse
     {
         echo('store');
         die;
+        $validated = $request->validate([
+            'msg_content' => 'required|string|max:255',
+        ]);
+ 
+        $request->user()->post()->create($validated);
+
+        
+        return redirect(route('post.index'));
     }
 
     /**

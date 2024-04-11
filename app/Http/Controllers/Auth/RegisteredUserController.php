@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Illuminate\View\View;
+use Monolog\Logger;
 
 class RegisteredUserController extends Controller
 {
@@ -20,6 +21,8 @@ class RegisteredUserController extends Controller
      */
     public function create(): View
     {
+        $log = new Logger('name');
+        $log->info('COUCOU');
         return view('auth.register');
     }
 

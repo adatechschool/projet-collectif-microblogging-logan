@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('msg_content');
             $table->string('photo');
-            $table->unsignedBigInteger('user_id');
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreignId('user_id')->constrained()->cascadeOnDelete();
+            $table->timestamps();
         });
     }
 
