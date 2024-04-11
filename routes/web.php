@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\PostController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -28,8 +29,10 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::get('/test',function (){
-    return "je teste des trucs";
-});
+Route::resource('post', PostController::class)
+->only(['index','store'])
+->middleware(['auth','verified']);
+
+
 
 require __DIR__.'/auth.php';
