@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Post;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\View\View;
 
 class PostController extends Controller
@@ -14,8 +15,9 @@ class PostController extends Controller
      */
     public function index() : View
     {
-        echo('test');
-        return view('post.index');
+        return view('post.index', [
+            'posts' => Post::with('user')->latest()->get(),
+        ]);
     }
 
     /**
@@ -31,16 +33,17 @@ class PostController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
-        echo('store');
-        die;
-        $validated = $request->validate([
+        
+        
+        $validated=$request->validate([
             'msg_content' => 'required|string|max:255',
         ]);
- 
+      
+        
         $request->user()->post()->create($validated);
 
         
-        return redirect(route('post.index'));
+        return redirect(route('posts.index'));
     }
 
     /**
@@ -54,17 +57,29 @@ class PostController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Post $post)
+    public function edit(Post $post): View
     {
-        //
+        Gate::authorize('update', $post);
+ 
+        return view('post.edit', [
+            'post' => $post,
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Post $post)
+    public function update(Request $request, Post $post): RedirectResponse
     {
-        //
+        Gate::authorize('update', $post);
+ 
+        $validated = $request->validate([
+            'msg_content' => 'required|string|max:255',
+        ]);
+ 
+        $post->update($validated);
+ 
+        return redirect(route('posts.index'));
     }
 
     /**
