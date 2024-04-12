@@ -36,12 +36,13 @@
                                         </svg>
                                     </button>
                                 </x-slot>
-                                <x-slot name="content">
+                                {{-- <x-slot name="content"> --}}
                                     <x-dropdown-link :href="route('posts.edit', $post)">
                                         {{ __('Edit') }}
                                     </x-dropdown-link>
-                                </x-slot>
+                                {{-- </x-slot> --}}
                             </x-dropdown>
+                            
                         @endif
                         </div>
                         <p class="mt-4 text-lg text-gray-900">{{ $post->msg_content }}</p>
