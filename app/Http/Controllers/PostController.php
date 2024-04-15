@@ -36,15 +36,26 @@ class PostController extends Controller
         
         
         $validated=$request->validate([
-            'msg_content' => 'required|string|max:255',
+            'msg_content' => 'bail|required|string|max:255',
+            "photo" => 'bail|required|image|mimes:jpeg,jpg,png,gif|max:1024',
         ]);
-      
-        
-        $request->user()->post()->create($validated);
+    
+        // Générer un nom de fichier unique
+        $filename = uniqid() . '.' . $request->photo->getClientOriginalExtension();
 
-        
-        return redirect(route('posts.index'));
+        // Stocker l'image avec le nom généré dans le dossier "posts"
+        $request->photo->storeAs('public/posts', $filename);
+
+        // Créer une entrée dans la base de données avec le même nom de fichier
+        $request->user()->post()->create([
+        'msg_content' => $validated['msg_content'],
+        'photo' => $filename, // Utiliser le même nom de fichier dans la base de données
+        ]);
+    
+        // 4. On retourne vers tous les posts : route("posts.index")
+        return redirect(route("posts.index"));
     }
+
 
     /**
      * Display the specified resource.

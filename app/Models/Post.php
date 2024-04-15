@@ -11,7 +11,7 @@ class Post extends Model
     use HasFactory;
 
     protected $fillable = [
-        'msg_content',
+        'msg_content', 'photo'
     ];
 
     public function user(): BelongsTo

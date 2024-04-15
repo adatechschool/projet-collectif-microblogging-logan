@@ -1,7 +1,16 @@
 <x-app-layout>
     <div class="relative z-10 max-w-2xl mx-auto p-4 sm:p-6 lg:p-8 bg-gray-900 text-black">
-        <form method="POST" action="{{ route('posts.store') }}">
+        <form method="POST" action="{{ route('posts.store') }}" enctype="multipart/form-data" name="formName">
             @csrf
+            <p>
+                <label for="photo" class="text-white">Photo</label><br/>
+                <input type="file" name="photo" id="photo" >
+    
+                <!-- Le message d'erreur pour "picture" -->
+                @error("photo")
+                <div>{{ $message }}</div>
+                @enderror
+            </p>
             <textarea
                 name="msg_content"
                 placeholder="{{ __('What\'s on your mind?') }}"
@@ -46,6 +55,7 @@
                                 @endif
                             </div>
                         </div>
+                        <img src="{{asset('storage/posts/' . $post->photo)}}" alt="image du post" style="max-width: 300px;" />
                         <p class="mt-4 text-lg text-gray-900">{{ $post->msg_content }}</p>
                     </div>
                 </div>
