@@ -14,10 +14,16 @@ class PostController extends Controller
      * Display a listing of the resource.
      */
 
+     public function connUserPosts() : View
+    {
+        return view('post.index', [
+            'posts' => Post::with('user')->latest()->get(),
+        ]);
+    }
     public function index() : View
     {
         return view('dashboard.index', [
-            'posts' => Post::with('user')->user()->latest()->get(),
+            'posts' => Post::with('user')->latest()->get(),
         ]);
     }
 
@@ -91,7 +97,7 @@ class PostController extends Controller
  
         $post->update($validated);
  
-        return redirect(route('dashboard.index'));
+        return redirect(route('post.index'));
     }
 
     /**
@@ -103,6 +109,6 @@ class PostController extends Controller
  
         $post->delete();
  
-        return redirect(route('dashboard.index'));
+        return redirect(route('post.index'));
     }
 }

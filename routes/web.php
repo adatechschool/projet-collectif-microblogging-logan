@@ -36,6 +36,7 @@ Route::resource('dashboard', PostController::class)
 Route::resource('post', PostController::class)
 ->only(['index', 'store', 'edit', 'update', 'destroy'])
 ->middleware(['auth','verified']);
+Route::get('post/connUserPosts', [PostController::class, 'connUserPosts'])->name('post.connUserPosts');
 
 
 
