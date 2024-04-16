@@ -33,6 +33,10 @@ Route::resource('dashboard', PostController::class)
 ->only(['index', 'store', 'edit', 'update', 'destroy'])
 ->middleware(['auth','verified']);
 
+Route::resource('post', PostController::class)
+->only(['index', 'store', 'edit', 'update', 'destroy'])
+->middleware(['auth','verified']);
+
 
 
 require __DIR__.'/auth.php';
