@@ -15,7 +15,7 @@ class PostController extends Controller
      */
     public function index() : View
     {
-        return view('post.index', [
+        return view('dashboard.index', [
             'posts' => Post::with('user')->latest()->get(),
         ]);
     }
@@ -53,7 +53,7 @@ class PostController extends Controller
         ]);
     
         // 4. On retourne vers tous les posts : route("posts.index")
-        return redirect(route("posts.index"));
+        return redirect(route("dashboard.index"));
     }
 
 
@@ -90,7 +90,7 @@ class PostController extends Controller
  
         $post->update($validated);
  
-        return redirect(route('posts.index'));
+        return redirect(route('dashboard.index'));
     }
 
     /**
@@ -102,6 +102,6 @@ class PostController extends Controller
  
         $post->delete();
  
-        return redirect(route('posts.index'));
+        return redirect(route('dashboard.index'));
     }
 }

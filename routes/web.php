@@ -29,7 +29,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::resource('posts', PostController::class)
+Route::resource('dashboard', PostController::class)
 ->only(['index', 'store', 'edit', 'update', 'destroy'])
 ->middleware(['auth','verified']);
 
