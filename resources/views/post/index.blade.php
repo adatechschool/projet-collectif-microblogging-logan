@@ -1,5 +1,10 @@
 <x-app-layout>
-    <div class="relative z-10 max-w-2xl mx-auto p-4 sm:p-6 lg:p-8 bg-gray-900 text-black">
+    <div class="relative z-10 max-w-2xl mx-auto p-4 sm:p-6 lg:p-8 bg-gray-950 text-black">
+        <x-slot name="header">
+            <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+                {{ __('Posts') }}
+            </h2>
+        </x-slot>
         <form method="POST" action="{{ route('post.store') }}" enctype="multipart/form-data" name="formName">
             @csrf
             <p>

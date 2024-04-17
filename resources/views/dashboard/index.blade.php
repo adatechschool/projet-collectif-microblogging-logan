@@ -4,7 +4,7 @@
             {{ __('Dashboard') }}
         </h2>
     </x-slot>
-    <div class="relative z-10 max-w-2xl mx-auto p-4 sm:p-6 lg:p-8 bg-gray-900 text-black">
+    <div class="relative z-10 max-w-2xl mx-auto p-4 sm:p-6 lg:p-8 bg-gray-950 text-black">
         <form method="POST" action="{{ route('dashboard.store') }}" enctype="multipart/form-data" name="formName">
             @csrf
             <p>
@@ -29,7 +29,7 @@
             @foreach ($posts as $post)
             <div class="bg-white shadow-sm rounded-lg tarot-card">
                 <div class="card-back rounded-lg">
-                    <img src="{{asset('storage/posts/' . $post->photo)}}" alt="image du post" class="w-full h-auto rounded-t-lg">
+                    <img src="{{asset('storage/posts/' . $post->photo)}}" alt="image du post" class="w-full h-40 rounded-t-lg">
                     <div class="content p-6">
                         <div class="flex items-center justify-between mb-4">
                             <div>
