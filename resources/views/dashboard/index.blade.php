@@ -4,8 +4,8 @@
             {{ __('Dashboard') }}
         </h2>
     </x-slot>
-    <div class="relative z-10 max-w-2xl mx-auto p-4 sm:p-6 lg:p-8 bg-gray-900 text-black">
-        <form method="POST" action="{{ route('dashboard.store') }}" enctype="multipart/form-data" name="formName">
+    <div class="relative z-10 max-w-screen-xl mx-auto p-4 sm:p-6 lg:p-8 bg-gray-900 text-black">
+        <form class="max-w-xl mx-auto" method="POST" action="{{ route('dashboard.store') }}" enctype="multipart/form-data" name="formName">
             @csrf
             <p>
                 <label for="photo" class="text-white">Photo</label><br/>
@@ -25,13 +25,13 @@
             <x-primary-button class="mt-2">{{ __('Post') }}</x-primary-button>
         </form>
 
-        <div class="grid grid-cols-3 gap-5 mt-4">
+        <div class="grid grid-cols-3 gap-1 mt-8">
             @foreach ($posts as $post)
             <div class="bg-white shadow-sm rounded-lg tarot-card">
                 <div class="card-back rounded-lg">
-                    <img src="{{asset('storage/posts/' . $post->photo)}}" alt="image du post" class="w-full h-auto rounded-t-lg">
+                    <img src="{{asset('storage/posts/' . $post->photo)}}" alt="image du post" class="w-full h-56 rounded-t-lg">
                     <div class="content p-6">
-                        <div class="flex items-center justify-between mb-4">
+                        <div class="flex items-center justify-between gap-5">
                             <div>
                                 <span class="text-gray-800">{{ $post->user->name }}</span>
                                 <small class="ml-2 text-sm text-gray-600">{{ $post->created_at->format('j M Y, g:i a') }}</small>

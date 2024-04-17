@@ -22,8 +22,8 @@
 
   .tarot-card {
     position: relative;
-    width: 200px;
-    height: 300px;
+    width: 300px;
+    height: 400px;
     perspective: 1000px;
 }
 
