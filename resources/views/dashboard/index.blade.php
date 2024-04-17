@@ -9,7 +9,7 @@
             @csrf
             <p>
                 <label for="photo" class="text-white">Photo</label><br/>
-                <input type="file" name="photo" id="photo" >
+                <input type="file" name="photo" id="photo" class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 mb-2">
     
                 <!-- Le message d'erreur pour "picture" -->
                 @error("photo")
@@ -22,18 +22,16 @@
                 class="block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
             >{{ old('msg_content') }}</textarea>
             <x-input-error :messages="$errors->get('msg_content')" class="mt-2" />
-            <x-primary-button class="mt-4">{{ __('Post') }}</x-primary-button>
+            <x-primary-button class="mt-2">{{ __('Post') }}</x-primary-button>
         </form>
 
-
-        <div class="mt-6 bg-white shadow-sm rounded-lg divide-y">
+        <div class="grid grid-cols-3 gap-5 mt-4">
             @foreach ($posts as $post)
-                <div class="p-6 flex space-x-2">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-600 -scale-x-100" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
-                    </svg>
-                    <div class="flex-1">
-                        <div class="flex justify-between items-start">
+            <div class="bg-white shadow-sm rounded-lg tarot-card">
+                <div class="card-back rounded-lg">
+                    <img src="{{asset('storage/posts/' . $post->photo)}}" alt="image du post" class="w-full h-auto rounded-t-lg">
+                    <div class="content p-6">
+                        <div class="flex items-center justify-between mb-4">
                             <div>
                                 <span class="text-gray-800">{{ $post->user->name }}</span>
                                 <small class="ml-2 text-sm text-gray-600">{{ $post->created_at->format('j M Y, g:i a') }}</small>
@@ -43,7 +41,7 @@
                             </div>
                             <div class="flex items-center">
                                 @if ($post->user->is(auth()->user()))
-                                    <button onclick="window.location='{{route('post.edit', $post)}}'">
+                                    <button class="text-purple-900" onclick="window.location='{{route('post.edit', $post)}}'">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
                                         <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325"/>
                                     </svg>   
@@ -51,7 +49,7 @@
                                     <form method="POST" action="{{ route('post.destroy', $post) }}" class="">
                                             @csrf
                                             @method('delete')
-                                            <button class="ml-2" :href="route('post.destroy', $post)" onclick="event.preventDefault(); this.closest('form').submit();">
+                                            <button class="ml-2 text-purple-900" :href="route('post.destroy', $post)" onclick="event.preventDefault(); this.closest('form').submit();">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
                                                     <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5M11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47M8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5"/>
                                                   </svg>
@@ -60,12 +58,14 @@
                                 @endif
                             </div>
                         </div>
-                        <img src="{{asset('storage/posts/' . $post->photo)}}" alt="image du post" style="max-width: 300px;" />
                         <p class="mt-4 text-lg text-gray-900">{{ $post->msg_content }}</p>
                     </div>
                 </div>
+                <div class="card-front rounded-lg">
+                    <img src="{{ asset('images/mountain.png') }}" class="h-full w-full rounded-lg"/>
+                </div>
+            </div>
             @endforeach
         </div>
-
     </div>
 </x-app-layout>
